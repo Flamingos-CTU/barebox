@@ -12,6 +12,12 @@ omap3-barebox-$(CONFIG_MACH_BEAGLE) += barebox-beagleboard.img
 FILE_barebox-beagleboard-mlo.img = start_omap3_beagleboard_sram.pblx.omap3_mlo
 omap3-mlo-$(CONFIG_MACH_BEAGLE) += barebox-beagleboard-mlo.img
 
+pblx-$(CONFIG_MACH_OVERO) += start_omap3_overo_sdram start_omap3_overo_sram
+FILE_barebox-overo.img = start_omap3_overo_sdram.pblx
+omap3-barebox-$(CONFIG_MACH_OVERO) += barebox-overo.img
+FILE_barebox-overo-mlo.img = start_omap3_overo_sram.pblx.omap3_mlo
+omap3-mlo-$(CONFIG_MACH_OVERO) += barebox-overo-mlo.img
+
 ifdef CONFIG_OMAP_BUILD_IFT
 image-y += $(omap3-mlo-y)
 else
