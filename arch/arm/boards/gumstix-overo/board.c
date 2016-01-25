@@ -36,6 +36,8 @@
 #include <linux/err.h>
 #include <usb/ehci.h>
 #include <asm/barebox-arm.h>
+#include <mach/sys_info.h>
+#include <mach/sdrc.h>
 #include <gpio.h>
 #include <printk.h>
 #include "overo.h"
@@ -136,6 +138,8 @@ static int overo_mem_init(void)
 		return 0;
 
 	omap3_add_sram0();
+	omap_add_ram0(get_sdr_cs_size(SDRC_CS0_OSET));
+	pr_info("found %s SDRAM at SDCS0\n", size_human_readable(get_sdr_cs_size(SDRC_CS0_OSET)));
 	omap_add_ram0(SDRAM_SIZE);
 
 	return 0;
