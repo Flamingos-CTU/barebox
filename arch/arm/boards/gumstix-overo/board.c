@@ -87,12 +87,12 @@ static struct gpmc_nand_platform_data nand_plat = {
 #ifdef CONFIG_DRIVER_NET_SMC911X
 static struct gpmc_config smsc_cfg = {
 	.cfg = {
-		0x41001000,	/*CONF1 */
-		0x00040500,	/*CONF2 */
-		0x00000000,	/*CONF3 */
-		0x04000500,	/*CONF4 */
-		0x05050505,	/*CONF5 */
-		0x000002c1,	/*CONF6 */
+		0x00001000,	/*CONF1 */
+		0x00060700,	/*CONF2 */
+		0x00020201,	/*CONF3 */
+		0x06000700,	/*CONF4 */
+		0x0006090A,	/*CONF5 */
+		0x87030000,	/*CONF6 */
 	},
 	.base = SMC911X_BASE,
 	/* GPMC address map as small as possible */
