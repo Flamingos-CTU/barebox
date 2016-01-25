@@ -135,6 +135,7 @@ static int overo_mem_init(void)
 	if (barebox_arm_machine() != MACH_TYPE_OVERO)
 		return 0;
 
+	omap3_add_sram0();
 	omap_add_ram0(SDRAM_SIZE);
 
 	return 0;
