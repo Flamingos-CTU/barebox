@@ -29,6 +29,7 @@
 #include <mach/syslib.h>
 #include <mach/sys_info.h>
 #include <generated/mach-types.h>
+#include "overo.h"
 
 /**
  * @brief Do the pin muxing required for Board operation.
@@ -188,7 +189,7 @@ static noinline int overo_board_init_sdram(void)
 
 	boarddata_create(bd, MACH_TYPE_OVERO);
 
-	barebox_arm_entry(0x80000000, SZ_128M, bd);
+	barebox_arm_entry(SDRAM_BASE, SDRAM_SIZE, bd);
 }
 
 ENTRY_FUNCTION(start_omap3_overo_sdram, bootinfo, r1, r2)
@@ -225,7 +226,7 @@ static noinline int overo_board_init(void)
 
 	boarddata_create(&bd, MACH_TYPE_OVERO);
 
-	barebox_arm_entry(0x80000000, SZ_128M, &bd);
+	barebox_arm_entry(SDRAM_BASE, SDRAM_SIZE, &bd);
 }
 
 ENTRY_FUNCTION(start_omap3_overo_sram, bootinfo, r1, r2)

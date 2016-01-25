@@ -36,8 +36,7 @@
 #include <linux/err.h>
 #include <usb/ehci.h>
 #include <asm/barebox-arm.h>
-
-#define SMC911X_BASE 0x2c000000
+#include "overo.h"
 
 #ifdef CONFIG_DRIVER_SERIAL_NS16550
 static int overo_console_init(void)
@@ -109,7 +108,7 @@ static int overo_mem_init(void)
 	if (barebox_arm_machine() != MACH_TYPE_OVERO)
 		return 0;
 
-	omap_add_ram0(SZ_128M);
+	omap_add_ram0(SDRAM_SIZE);
 
 	return 0;
 }
