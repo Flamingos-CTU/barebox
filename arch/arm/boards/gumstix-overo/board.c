@@ -36,6 +36,8 @@
 #include <linux/err.h>
 #include <usb/ehci.h>
 #include <asm/barebox-arm.h>
+#include <gpio.h>
+#include <printk.h>
 #include "overo.h"
 
 #ifdef CONFIG_DRIVER_SERIAL_NS16550
@@ -103,6 +105,31 @@ static void overo_net_init(void)
 }
 #endif /* CONFIG_DRIVER_NET_SMC911X */
 
+static int overo_board_revision(void)
+{
+	int revision;
+	pr_info("board-revision: ");
+
+	if (!gpio_request(112, "") &&
+            !gpio_request(113, "") &&
+            !gpio_request(115, "")) {
+
+                gpio_direction_input(112);
+                gpio_direction_input(113);
+                gpio_direction_input(115);
+
+                revision = gpio_get_value(115) << 2 |
+                           gpio_get_value(113) << 1 |
+                           gpio_get_value(112);
+
+		pr_info("%d\n", revision);
+        } else {
+		pr_info("unable to acquire board revision GPIOs\n");
+		revision = -1;
+	}
+	return revision;
+}
+
 static int overo_mem_init(void)
 {
 	if (barebox_arm_machine() != MACH_TYPE_OVERO)
@@ -119,6 +146,7 @@ static int overo_devices_init(void)
 	if (barebox_arm_machine() != MACH_TYPE_OVERO)
 		return 0;
 
+	overo_board_revision();
 	i2c_register_board_info(0, i2c_devices, ARRAY_SIZE(i2c_devices));
 	omap3_add_i2c1(NULL);
 
