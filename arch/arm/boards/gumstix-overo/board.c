@@ -74,9 +74,15 @@ static struct ehci_platform_data ehci_pdata = {
 };
 #endif /* CONFIG_USB_EHCI_OMAP */
 
-static struct i2c_board_info i2c_devices[] = {
+static struct i2c_board_info i2c0_devices[] = {
 	{
 		I2C_BOARD_INFO("twl4030", 0x48),
+	},
+};
+
+static struct i2c_board_info i2c2_devices[] = {
+	{
+		I2C_BOARD_INFO("at24", 0x51),
 	},
 };
 
@@ -152,8 +158,10 @@ static int overo_devices_init(void)
 		return 0;
 
 	overo_board_revision();
-	i2c_register_board_info(0, i2c_devices, ARRAY_SIZE(i2c_devices));
+	i2c_register_board_info(0, i2c0_devices, ARRAY_SIZE(i2c0_devices));
 	omap3_add_i2c1(NULL);
+	i2c_register_board_info(2, i2c2_devices, ARRAY_SIZE(i2c2_devices));
+	omap3_add_i2c3(NULL);
 
 #ifdef CONFIG_USB_EHCI_OMAP
 	if (ehci_omap_init(&omap_ehci_pdata) >= 0)
